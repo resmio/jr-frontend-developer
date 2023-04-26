@@ -1,0 +1,61 @@
+body {
+  background-color: darkgray;
+  margin: 0;
+  padding: 0;
+}
+
+.Nav {
+  background-color: black;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+  position: sticky;
+  top: 0;
+}
+
+.NavList {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.Main {
+  margin: 0 auto;
+  max-width: 40rem;
+  width: 80%;
+}
+
+.Meme {
+  display: block;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.MemeList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.MemeListItem {
+  align-items: center;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.MemeListItem:last-child {
+  margin-bottom: 0;
+}
+
+.Footer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
