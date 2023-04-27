@@ -7,6 +7,4 @@ Your tasks:
 
 Spend no more than 2-3 hours of your time. Start with tasks 1 and 2, then continue with either 3 or 4. If you've got time left, try completing the other task. If you can't solve or complete all tasks - no problem!
 
-When you're done, open a pull request in this repository. We will review it and come back to you as soon as possible.
-
 Good luck! :-)
