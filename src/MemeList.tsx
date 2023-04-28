@@ -13,8 +13,8 @@ export default function MemeList({
 }: MemeListProps) {
   return (
     <ul className="MemeList">
-      {memes.map((meme) => (
-        <li className="MemeListItem">
+      {memes.map((meme, index) => (
+        <li key={index} className="MemeListItem">
           <h2>{meme.title}</h2>
           <img className="Meme" src={meme.url} alt={meme.title} />
           <button onClick={() => onToggleLike(meme)}>
