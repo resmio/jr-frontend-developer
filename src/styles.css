@@ -21,6 +21,11 @@ body {
   list-style-type: none;
 }
 
+.NavButton > a {
+  text-decoration: none;
+  color: black;
+}
+
 .Main {
   margin: 0 auto;
   max-width: 40rem;

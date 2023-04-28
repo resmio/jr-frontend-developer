@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import "./styles.css";
 import { Meme } from "./types";
@@ -6,11 +7,11 @@ import { getMemes } from "./api";
 import { getMemeId } from "./utils";
 import MemeList from "./MemeList";
 
-export default function App() {
+export default function App({ isLikedPage }: { isLikedPage: boolean }) {
   const [memes, setMemes] = useState<Meme[]>([]);
-  const [likedMemes, setLikedMemes] = useState<Meme[]>([]);
+  // #3 if there are memes saved in local storage, set them as the state's initial value
+  const [likedMemes, setLikedMemes] = useState<Meme[]>(JSON.parse(localStorage.memes || null) || []);
   const [isLoading, setLoading] = useState(false);
-  const [filter, setFilter] = useState<"new" | "liked">("new");
 
   const hasLikedMeme = (meme: Meme) => {
     return !!likedMemes.find((m) => getMemeId(m) === getMemeId(meme));
@@ -23,6 +24,7 @@ export default function App() {
       );
       setLikedMemes(filteredMemes);
     } else {
+      // #2 (was already functional) - new liked memes get added to the beginning of the array, thus being correctly displayed in the order new > old
       setLikedMemes([meme, ...likedMemes]);
     }
   };
@@ -41,36 +43,37 @@ export default function App() {
     loadMoreMemes();
   }, []);
 
+  // #3 on change of liked memes, update local storage
+  useEffect(() => {
+    localStorage.setItem('memes', JSON.stringify(likedMemes))
+  }, [likedMemes])
+
   return (
     <>
       <nav className="Nav">
         <ul className="NavList">
           <li className="NavListItem">
-            <button onClick={() => setFilter("new")}>New Memes</button>
+            <button className="NavButton">
+              <Link to="/new" >New Memes</Link>
+            </button>
           </li>
           <li className="NavListItem">
-            <button onClick={() => setFilter("liked")}>Liked Memes</button>
+            <button className="NavButton">
+            {/* #1 show number of liked memes  */}
+              <Link to="/liked" >Liked Memes ({likedMemes?.length})</Link>
+            </button>
           </li>
         </ul>
       </nav>
       <main className="Main">
-        {filter === "new" && (
-          <MemeList
-            memes={memes}
-            hasLikedMeme={hasLikedMeme}
-            onToggleLike={toggleLike}
-          />
-        )}
-        {filter === "liked" && (
-          <MemeList
-            memes={likedMemes}
-            hasLikedMeme={() => true}
-            onToggleLike={toggleLike}
-          />
-        )}
+        <MemeList
+          memes={ isLikedPage ? likedMemes : memes}
+          hasLikedMeme={hasLikedMeme}
+          onToggleLike={toggleLike}
+        />
       </main>
       <footer className="Footer">
-        {filter === "new" && (
+        {!isLikedPage && (
           <button disabled={isLoading} onClick={() => loadMoreMemes()}>
             Load more
           </button>
